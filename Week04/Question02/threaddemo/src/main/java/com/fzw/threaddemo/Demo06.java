@@ -28,19 +28,4 @@ public class Demo06 {
         System.out.println("子线程结果:" + result);
         System.out.println("主线程结束:" + TimeUtil.currentDateTimeFormat());
     }
-
-    private static class MyThread implements Runnable {
-
-        private String result;
-
-        public MyThread(String result) {
-            this.result = result;
-        }
-
-        @Override
-        public void run() {
-
-        }
-    }
-
 }
