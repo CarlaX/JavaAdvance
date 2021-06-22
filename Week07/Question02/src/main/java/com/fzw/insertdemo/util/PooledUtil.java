@@ -18,7 +18,8 @@ public class PooledUtil {
         hikariConfig.setJdbcUrl(
                 "jdbc:mysql://localhost:3306/orderserver?" +
                         "serverTimezone=GMT%2B8&characterEncoding=utf8&useUnicode=true&useSSL=false&" +
-                        "useAffectedRows=true&allowPublicKeyRetrieval=true&allowMultiQueries=true");
+                        "useAffectedRows=true&allowPublicKeyRetrieval=true&allowMultiQueries=true" +
+                        "&rewriteBatchedStatements=true");
         hikariConfig.setDriverClassName("com.mysql.cj.jdbc.Driver");
         hikariConfig.setUsername("carla");
         hikariConfig.setPassword("carla");
