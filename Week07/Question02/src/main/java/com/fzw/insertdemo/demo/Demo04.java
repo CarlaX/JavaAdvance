@@ -57,7 +57,7 @@ public class Demo04 {
         String sql = "insert into `order` (user_id,total_price,total_amount,create_time,pay_time,finish_time) values (?,?,?,?,?,?)";
 
         for (int i = 0; i < 10; i++) {
-            Thread thread = new Thread(() -> {
+            fixedThreadPool.submit(() -> {
                 Connection connection = null;
                 try {
                     connection = PooledUtil.getConnection();
@@ -87,7 +87,6 @@ public class Demo04 {
                     countDownLatch.countDown();
                 }
             });
-            fixedThreadPool.submit(thread);
         }
         try {
             countDownLatch.await();
