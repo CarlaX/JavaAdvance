@@ -6,10 +6,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.Properties;
 
 /**
  * @author fzw
@@ -29,6 +27,11 @@ public class Demo01 {
         try {
             DynamicDatasource.setKeyContextContent(DynamicDatasource.MASTER_KEY);
             connection = this.dynamicDatasource.getConnection();
+
+            DatabaseMetaData metaData = connection.getMetaData();
+            String url = metaData.getURL();
+            log.info("{}", url);
+
             connection.setAutoCommit(false);
             PreparedStatement preparedStatement = connection.prepareStatement("insert into user (username, password) values (?,?)");
             preparedStatement.setString(1, "carla");
@@ -54,6 +57,10 @@ public class Demo01 {
         try {
             DynamicDatasource.setKeyContextContent(DynamicDatasource.SLAVE_KEY);
             connection = this.dynamicDatasource.getConnection();
+
+            DatabaseMetaData metaData = connection.getMetaData();
+            String url = metaData.getURL();
+            log.info("{}", url);
 
             connection.setAutoCommit(false);
             PreparedStatement preparedStatement = connection.prepareStatement("select * from user");

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fzw.shardingspherespringdemo.mapper.UserMapper">
+    <select id="queryAllUser" resultMap="userRMP">
+        select id, username, password
+        from user
+    </select>
+
+    <resultMap id="userRMP" type="com.fzw.shardingspherespringdemo.pojo.po.UserPO">
+        <id property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+    </resultMap>
+</mapper>
