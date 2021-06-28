@@ -1,0 +1,98 @@
+schemaName: sharding_db
+
+dataSources:
+  ds_0:
+    url: jdbc:mysql://127.0.0.1:3306/ordersharding?serverTimezone=GMT%2B8&characterEncoding=utf8&useUnicode=true&useSSL=false&useAffectedRows=true
+    username: root
+    password: root
+    connectionTimeoutMilliseconds: 30000
+    idleTimeoutMilliseconds: 60000
+    maxLifetimeMilliseconds: 1800000
+    maxPoolSize: 10
+    minPoolSize: 1
+    maintenanceIntervalMilliseconds: 30000
+  ds_1:
+    url: jdbc:mysql://127.0.0.1:3307/ordersharding?serverTimezone=GMT%2B8&characterEncoding=utf8&useUnicode=true&useSSL=false&useAffectedRows=true
+    username: root
+    password: root
+    connectionTimeoutMilliseconds: 30000
+    idleTimeoutMilliseconds: 60000
+    maxLifetimeMilliseconds: 1800000
+    maxPoolSize: 10
+    minPoolSize: 1
+    maintenanceIntervalMilliseconds: 30000
+
+rules:
+- !SHARDING
+  tables:
+    order:
+      actualDataNodes: ds_${0..1}.order_${0..3}
+      tableStrategy:
+        standard:
+          shardingColumn: id
+          shardingAlgorithmName: order_inline
+      keyGenerateStrategy:
+        column: id
+        keyGeneratorName: snowflake
+    user:
+      actualDataNodes: ds_${0..1}.user_${0..3}
+      tableStrategy:
+        standard:
+          shardingColumn: id
+          shardingAlgorithmName: user_inline
+      keyGenerateStrategy:
+        column: id
+        keyGeneratorName: snowflake
+    commodity:
+      actualDataNodes: ds_${0..1}.commodity_${0..3}
+      tableStrategy:
+        standard:
+          shardingColumn: id
+          shardingAlgorithmName: commodity_inline
+      keyGenerateStrategy:
+        column: id
+        keyGeneratorName: snowflake
+    order_commodity:
+      actualDataNodes: ds_${0..1}.order_commodity_${0..3}
+      tableStrategy:
+        standard:
+          shardingColumn: id
+          shardingAlgorithmName: order_commodity_inline
+      keyGenerateStrategy:
+        column: id
+        keyGeneratorName: snowflake
+  defaultDatabaseStrategy:
+    standard:
+      shardingColumn: id
+      shardingAlgorithmName: database_inline
+ 
+  bindingTables:
+    - order,commodity,user,order_commodity
+ 
+  shardingAlgorithms:
+    database_inline:
+      type: INLINE
+      props:
+        algorithm-expression: ds_${id % 2}
+    order_inline:
+      type: INLINE
+      props:
+        algorithm-expression: order_${id % 4}
+    user_inline:
+      type: INLINE
+      props:
+        algorithm-expression: user_${id % 4}
+    commodity_inline:
+      type: INLINE
+      props:
+        algorithm-expression: commodity_${id % 4}
+    order_commodity_inline:
+      type: INLINE
+      props:
+        algorithm-expression: order_commodity_${id % 4}
+ 
+  keyGenerators:
+    snowflake:
+      type: SNOWFLAKE
+      props:
+        worker-id: 123
