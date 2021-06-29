@@ -1,16 +1,28 @@
-package com.fzw.shardingsphereproxydemo.util;
+package com.fzw.shardingsphereproxyxademo.proxy.util;
 
+import com.atomikos.icatch.jta.UserTransactionImp;
+import com.atomikos.icatch.jta.UserTransactionManager;
+import com.atomikos.jdbc.AtomikosDataSourceBean;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.shardingsphere.driver.jdbc.core.datasource.ShardingSphereDataSource;
+import org.apache.shardingsphere.transaction.core.TransactionType;
+import org.apache.shardingsphere.transaction.core.TransactionTypeHolder;
 
+import javax.transaction.*;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Properties;
 
 /**
  * @author fzw
  * @description
+ * @date 2021-06-29
  **/
-public class PooledUtil {
+@Slf4j
+public class XAPooledUtil {
+
     private static final HikariDataSource dataSource;
 
     static {
@@ -39,5 +51,9 @@ public class PooledUtil {
         if (connection != null) {
             dataSource.evictConnection(connection);
         }
+    }
+
+    public static void closePool(){
+        dataSource.close();
     }
 }
