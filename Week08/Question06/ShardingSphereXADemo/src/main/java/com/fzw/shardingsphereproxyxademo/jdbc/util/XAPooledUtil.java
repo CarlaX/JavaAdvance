@@ -73,15 +73,22 @@ public class XAPooledUtil {
 
         Properties database_inline_properties = new Properties();
         database_inline_properties.setProperty("algorithm-expression", "ds_${id % 2}");
-        shardingRuleConfiguration.getShardingAlgorithms().put("database_inline", new ShardingSphereAlgorithmConfiguration("INLINE", database_inline_properties));
+//        直接单独添加
+//        shardingRuleConfiguration.getShardingAlgorithms().put("database_inline", new ShardingSphereAlgorithmConfiguration("INLINE", database_inline_properties));
 
         Properties user_inline_properties = new Properties();
         user_inline_properties.setProperty("algorithm-expression", "user_${id % 4}");
-        shardingRuleConfiguration.getShardingAlgorithms().put("user_inline", new ShardingSphereAlgorithmConfiguration("INLINE", user_inline_properties));
+//        shardingRuleConfiguration.getShardingAlgorithms().put("user_inline", new ShardingSphereAlgorithmConfiguration("INLINE", user_inline_properties));
 
         Properties order_inline_properties = new Properties();
         order_inline_properties.setProperty("algorithm-expression", "order_${id % 4}");
-        shardingRuleConfiguration.getShardingAlgorithms().put("order_inline", new ShardingSphereAlgorithmConfiguration("INLINE", order_inline_properties));
+//        shardingRuleConfiguration.getShardingAlgorithms().put("order_inline", new ShardingSphereAlgorithmConfiguration("INLINE", order_inline_properties));
+
+//        一并添加
+        shardingRuleConfiguration.setShardingAlgorithms(Map.of(
+                "database_inline", new ShardingSphereAlgorithmConfiguration("INLINE", database_inline_properties),
+                "user_inline", new ShardingSphereAlgorithmConfiguration("INLINE", user_inline_properties),
+                "order_inline", new ShardingSphereAlgorithmConfiguration("INLINE", order_inline_properties)));
 
         Properties snowflake_properties = new Properties();
         snowflake_properties.setProperty("work-id", "123");

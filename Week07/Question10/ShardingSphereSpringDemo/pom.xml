@@ -21,7 +21,6 @@
             <groupId>org.apache.shardingsphere</groupId>
             <artifactId>shardingsphere-jdbc-core-spring-boot-starter</artifactId>
             <version>5.0.0-beta</version>
-            <!--            <version>5.0.0-alpha</version>-->
         </dependency>
         <dependency>
             <groupId>org.mybatis.spring.boot</groupId>
