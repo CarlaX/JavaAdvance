@@ -1,0 +1,31 @@
+hmily:
+  server:
+    configMode: local
+    appName: dubbo-tcc-demo
+  config:
+    appName: dubbo-tcc-demo
+    serializer: kryo
+    contextTransmittalMode: threadLocal
+    scheduledThreadMax: 4
+    repository: file
+#  support:
+#    rpc:
+#      annotation: true
+repository:
+  #  database:
+  #    driverClassName: com.mysql.cj.jdbc.Driver
+  #    url: jdbc:mysql://localhost:3306/foreignexchange?serverTimezone=GMT%2B8&characterEncoding=utf8&useUnicode=true&useSSL=false&useAffectedRows=true&allowPublicKeyRetrieval=true&allowMultiQueries=true
+  #    username: root
+  #    password: root
+  #    maxActive: 20
+  #    minIdle: 10
+  #    connectionTimeout: 30000
+  #    idleTimeout: 600000
+  #    maxLifetime: 1800000
+  file:
+    path: C:/Carla/WorkSpace/IDEA/JavaAdvance/Week09/Question07/DubboTCCDemo/dubboconsumer/src/main/resources/log
+    prefix: /hmily
+  zookeeper:
+    host: localhost:2181
+    sessionTimeOut: 1000
+    rootPath: /hmily

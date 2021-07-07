@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fzw.dubboprovider.mapper.DollarAccountMapper">
+    <update id="minusDollarAccount">
+        update user_dollar_account
+        set dollar_amount = dollar_amount - #{amount}
+        where id = #{id}
+    </update>
+    <update id="plusDollarAccount">
+        update user_dollar_account
+        set dollar_amount = dollar_amount + #{amount}
+        where id = #{id}
+    </update>
+    <select id="selectById" resultMap="userDollarMap">
+        select id, username, dollar_amount
+        from user_dollar_account
+        where id = #{id}
+    </select>
+    <resultMap id="userDollarMap" type="com.fzw.dubbocommon.pojo.UserDollarAccountPO">
+        <id property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result property="dollarAmount" column="dollar_amount"/>
+    </resultMap>
+</mapper>
