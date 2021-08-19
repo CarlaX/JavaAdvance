@@ -1,0 +1,18 @@
+<configuration>
+    <property name="myPattern" value="[%-5level %d{yyy-MM-dd HH:mm:ss.SSS} %c] %M %L %thread : %m %n"/>
+    <appender name="myConsole" class="ch.qos.logback.core.ConsoleAppender">
+        <target>System.out</target>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${myPattern}</pattern>
+        </encoder>
+    </appender>
+    <logger name="org.apache.hc.client5.http" level="info" additivity="false">
+        <appender-ref ref="myConsole"/>
+    </logger>
+    <logger name="org.apache.hc.client5.http.wire" level="info" additivity="false">
+        <appender-ref ref="myConsole"/>
+    </logger>
+    <root level="info">
+        <appender-ref ref="myConsole"/>
+    </root>
+</configuration>
